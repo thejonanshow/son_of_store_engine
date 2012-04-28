@@ -15,6 +15,6 @@
 Fabricator(:store) do
   name Faker::Lorem.words(3).join(" ")
   description Faker::Lorem.words(10).join(" ")
-  store_unique_id Faker::Lorem.words(1).first
+  slug Faker::Lorem.words(1).first
   status 'active'
 end
