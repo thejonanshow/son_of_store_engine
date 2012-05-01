@@ -195,7 +195,6 @@ describe User do
 
     describe "products" do
       before(:each) do
-        admin_user.cart = cart
         product.store = store
         admin_user.cart.add_product(product)
         visit admin_products_path(store)
