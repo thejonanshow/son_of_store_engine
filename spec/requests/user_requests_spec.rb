@@ -3,6 +3,8 @@ require 'spec_helper'
 describe User, :user_request => :user do
   let(:store) { Fabricate(:store) }
   let (:user) { Fabricate(:user) }
+  let (:admin) {Fabricate(:user,:roles => [Role.admin]) }
+  let (:superadmin) { Fabricate(:user, :roles => [Role.super_admin]) }
   let (:product) { Fabricate(:product, :store => store) }
   let (:cart) { Fabricate(:cart, :store => store) }
 
@@ -98,7 +100,7 @@ describe User, :user_request => :user do
 
   describe "superadmins" do
     it "can edit users" do
-      login_as_superadmin(user)
+      login_as(superadmin)
       visit edit_user_registration_path(user)
       page.should_not have_content "You are not authorized to access this page."
       page.should have_button "Update My Account"
@@ -107,7 +109,7 @@ describe User, :user_request => :user do
 
   describe "admins" do
     it "can't edit users" do
-      login_as_admin(user)
+      login_as(admin)
       visit edit_user_path(user)
       page.should have_content "You are not authorized to access this page."
     end

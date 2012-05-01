@@ -3,20 +3,19 @@ require 'spec_helper'
 describe Role do
   let(:store) { Fabricate(:store) }
   let(:user) { Fabricate(:user) }
+  let!(:superadmin) { Fabricate(:user, :roles => [Role.super_admin]) }
   let(:role) { Fabricate(:role) }
 
   it "can be viewed by a super admin on a user edit page" do
     user.roles << role
-    login_as_superadmin(user)
+    login_as(superadmin)
     visit edit_user_path(user)
     page.should have_content(role.name)
   end
 
   describe "superadmins" do
     before(:each) do
-      role.update_attributes(:name => 'super_admin')
-      user.roles << role
-      login_as(user)
+      login_as(superadmin)
     end
 
     it "can create roles" do

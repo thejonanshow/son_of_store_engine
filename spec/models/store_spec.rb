@@ -165,10 +165,11 @@ describe Store do
   end
 
   context "when a user is added as a new admin to the store" do
-    let! (:admin_user) { Fabricate(:admin_user) }
-    let! (:store) { Fabricate(:store, :users => [admin_user]) }
+    let! (:admin_user) { Fabricate(:user) }
+    let! (:store) { Fabricate(:store) }
 
     it "emails user" do
+      store.add_admin(admin_user)
       mailer = double("string")
       StoreAdminMailer.stub(:new_admin_email).with(admin_user, store).and_return mailer
       mailer.should_receive(:deliver)

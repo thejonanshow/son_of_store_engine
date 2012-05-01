@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Product do
+  let!(:admin_user) { Fabricate(:user) }
   let!(:store) { Fabricate(:store) }
   let!(:products) do
     [
@@ -14,6 +15,7 @@ describe Product do
 
   context "index" do
     before(:each) do
+      store.add_admin(admin_user)
       visit products_path(store)
     end
 

@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe 'Store Admin' do
-  let!(:admin) { Fabricate(:admin_user) }
+  let!(:admin) { Fabricate(:user) }
   let!(:user) { Fabricate(:user) }
-  let!(:super_admin_user) { Fabricate(:super_admin_user) }
+  let!(:super_admin_user) { Fabricate(:user, :roles => [Role.super_admin]) }
 
   let!(:stores) do
     stores = 20.times.map do |n|
@@ -14,7 +14,7 @@ describe 'Store Admin' do
     end
 
     stores.each do |store|
-      store.add_admin(user)
+      store.add_admin(admin)
     end
   end
 
@@ -140,7 +140,7 @@ describe 'Store Admin' do
 
   context "for a store with products" do
     before(:each) do
-      login_as(user)
+      login_as(admin)
     end
 
     it "creates a product, sees a flash message and a list of products" do
