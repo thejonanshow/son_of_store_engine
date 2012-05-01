@@ -11,8 +11,24 @@
 #  email      :string(255)
 #
 
-# A cart is an order with state, and becomes an order on checkout.
-class Cart < Order
+# A cart is a place where a user places products, from which an order is created on checkout.
+class Cart < ActiveRecord::Base
+
+  attr_accessible :user_id,
+                  :status,
+                  :cart_items_attributes,
+                  :address_id,
+                  :email
+
+  has_many :cart_items
+  has_many :products, :through => :cart_items
+  belongs_to :user
+  belongs_to :store
+
+  accepts_nested_attributes_for :cart_items
+
+  # after_save :update_slug
+
   def add_product_by_id(product_id)
     add_product(Product.find(product_id))
   end

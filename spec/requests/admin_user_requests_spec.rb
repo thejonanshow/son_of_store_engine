@@ -182,6 +182,10 @@ describe User do
             page.should have_content("Stocker deleted")
           end
 
+          it "removes the stocker user from the stores users" do
+            expect { click_button "Delete Stocker" }.to change{ store.users.count }.by(-1)
+          end
+
           it "notifies the deleted stocker that they have been removed via email" do
             expect {click_button "delete_stocker_#{new_stocker.id}" }.to change(ActionMailer::Base.deliveries, :size).by(1)
           end
@@ -191,7 +195,6 @@ describe User do
 
     describe "products" do
       before(:each) do
-        admin_user.cart = cart
         product.store = store
         admin_user.cart.add_product(product)
         visit admin_products_path(store)
