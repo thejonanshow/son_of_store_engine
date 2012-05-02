@@ -6,7 +6,7 @@ class CartsController < ApplicationController
   end
 
   def prompt
-    redirect_to new_order_path(@store, :cart => @cart) if current_user
+    redirect_to checkout_path if current_user
   end
 
   def update
@@ -26,6 +26,12 @@ class CartsController < ApplicationController
     cart.destroy
     session[:cart_id] = nil
     redirect_to cart_path
+  end
+
+  def checkout
+    order = Order.create_from_cart(@cart, @store)
+    order.update_attributes(:user_id => current_user.id) if current_user
+    redirect_to edit_order_path(@store, order)
   end
 
   private 
