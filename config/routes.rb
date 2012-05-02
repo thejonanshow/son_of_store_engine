@@ -19,7 +19,6 @@ StoreEngine::Application.routes.draw do
   end
 
   scope ":slug" do
-    get "checkout_prompt" => "carts#prompt", :as => "checkout_prompt"
     get "add_category_to_product" => "admin/categories#add_product", :as => "add_category_to_product"
     namespace :admin do
       get '/' => 'dashboards#show'
@@ -46,7 +45,7 @@ StoreEngine::Application.routes.draw do
     resources :categories
     resources :orders
     resource :cart, :only => [:show, :update]
-    resource :cart_item, :only => [:destroy]
+    resources :cart_items, only: [:create, :update, :destroy]
   end 
 
   root :to => "stores#index"

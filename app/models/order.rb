@@ -48,36 +48,20 @@ class Order < ActiveRecord::Base
 
   def self.create_from_cart(cart, store)
     order = store.orders.create(:status => "pending")
-    cart.products.each { |product| order.add_product(product) }
+    cart.cart_items.each { |cart_item| order.add_order_item(cart_item) }
     order.save
     order
   end
 
-  def add_product(product)
-    if products.include?(product)
-      increment_quantity_for(product)
-    else
-      products << product
-    end
-  end
-
-  def increment_quantity_for(product)
-    oi = OrderItem.where(:order_id => id).find_by_product_id(product.id)
-    oi.update_attribute(:quantity, oi.quantity + 1)
+  def add_order_item(cart_item)
+    self.order_items.create(:product_id => cart_item.product_id,
+                            :quantity => cart_item.quantity)
   end
 
   def total
-    @total ||= products.inject(0) { |sum, product| sum + subtotal(product) }
-  end
-
-  def subtotal(product)
-    oi = OrderItem.where(:order_id => id).find_by_product_id(product.id)
-    (oi.quantity * oi.product.price).round(2)
-  end
-
-  def quantity_for(product)
-    oi = OrderItem.where(:order_id => id).find_by_product_id(product.id)
-    oi.quantity
+    @total ||= order_items.inject(0) do |sum, order_item|
+      sum += order_item.subtotal
+    end
   end
 
   def items

@@ -8,26 +8,25 @@ div.cart id="cart"
       th#cart Quantity
       th#cart Subtotal
       th#cart Actions
-    = form_for(@cart, url: cart_path(@store)) do |f|
-      - @cart.items.each do |item|
+    
+      - @cart.cart_items.each do |cart_item|
         tr#cart
-          td.title = item.title
-          td.price = item.price
+          td.title = cart_item.title
+          td.price = cart_item.price
           td.quantity
-            = f.fields_for(item) do |i|
-              = i.hidden_field :id
-              / = i.label :quantity
-              = i.text_field :quantity
-          td.subtotal = item.subtotal
-          td = link_to "", cart_item_path(:item_id => item.id), :method => :delete, 
-               :class=> 'i icon-remove', :confirm => "Are you sure, you'd like to remove this item?"
+            = form_for(cart_item, url: cart_item_path(@store, cart_item)) do |f|
+              = f.hidden_field :id
+              = f.number_field :quantity, :min => 1, :id => "quantity"
+              = f.submit "Change Quantity", :class => 'btn'
+          td.subtotal = cart_item.subtotal
+          td = link_to "Remove Item", cart_item_path(:id => cart_item.id), :method => :delete, 
+               :class=> 'btn btn-primary', :confirm => "Are you sure, you'd like to remove this item?"
       tr
         td
         td
         td#text Total: 
         td#total = @cart.total
-      = f.submit "Update Cart", :class => 'btn'
       
 .cart-actions
-= link_to "Checkout", checkout_prompt_path(@store), :class=>'btn btn-primary'
+= link_to "Checkout", new_order_path(@store, :cart => @cart), :class=>'btn btn-primary'
 = link_to "Keep Shopping", products_path(@store), :class => 'btn btn-primary'

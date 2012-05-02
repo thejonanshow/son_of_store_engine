@@ -1,5 +1,13 @@
 # Shows a user their orders
 class OrdersController < ApplicationController
+  before_filter :find_cart_from_session
+
+  def new
+    order = Order.create_from_cart(@cart, @store)
+    order.update_attributes(:user_id => current_user.id) if current_user
+    redirect_to edit_order_path(@store, order)
+  end
+
   def show
     @order = @store.orders.find(params[:id])
     notice = "You are not authorized to view that order."
@@ -23,4 +31,10 @@ class OrdersController < ApplicationController
     OrderMailer.confirmation_email(order).deliver
     redirect_to order_path(@store, order), :notice => "Order placed. Thank you!"
   end
+
+  private 
+
+    def find_cart_from_session
+      @cart = Cart.find(session[:cart_id])
+    end
 end

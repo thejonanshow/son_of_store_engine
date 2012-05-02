@@ -196,7 +196,7 @@ describe User do
     describe "products" do
       before(:each) do
         product.store = store
-        admin_user.cart.add_product(product)
+        cart.add_product(product)
         visit admin_products_path(store)
       end
 
@@ -266,10 +266,13 @@ describe User do
 
     context "orders" do
       it "views" do
-        order.add_product(product)
+        visit products_path(store)
+        click_link_or_button("Add to Cart")
+        click_link_or_button("Checkout")
+        click_button("Submit")
         visit admin_orders_path(store)
-        click_link "#{order.id}"
-        page.should have_content("#{order.items.first.title}")
+        click_link "#{Order.last.id}"
+        page.should have_content("#{Order.last.items.last.title}")
       end
 
       context "edit and" do
@@ -285,27 +288,37 @@ describe User do
         it "can't change quantity of products on non-pending orders" do
           order.status = "shipped"
           order.save
-          order.add_product(product)
+          visit products_path(store)
+          click_link_or_button("Add to Cart")
+          click_link_or_button("Checkout")
+          click_button("Submit")
           visit admin_orders_path(store)
-          click_link "#{order.id}"
+          click_link "#{Order.last.id}"
           page.should_not have_content("Edit")
         end
 
         it "remove products" do
-          order.add_product(product)
-          visit admin_order_path(store, order)
+          visit products_path(store)
+          click_link_or_button("Add to Cart")
+          click_link_or_button("Checkout")
+          click_button("Submit")
+          visit admin_orders_path(store)
+          visit admin_order_path(store, Order.last)
           click_link "Remove"
           page.should have_content("Item deleted.")
           page.should_not have_content(product.title)
         end
 
         it "change quantity of products on pending orders" do
-          order.add_product(product)
+          visit products_path(store)
+          click_link_or_button("Add to Cart")
+          click_link_or_button("Checkout")
+          click_button("Submit")
           visit admin_orders_path(store)
-          find("#order_#{order.id}").click_link "Edit"
+          find("#order_#{Order.last.id}").click_link "Edit"
           fill_in "order_order_items_attributes_0_quantity", :with => "2"
           click_button "Update Order"
-          visit admin_order_path(store, order)
+          visit admin_order_path(store, Order.last)
           find(".quantity").text.should == "2"
         end
 

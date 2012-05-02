@@ -27,8 +27,6 @@ class Cart < ActiveRecord::Base
 
   accepts_nested_attributes_for :cart_items
 
-  # after_save :update_slug
-
   def add_product_by_id(product_id)
     add_product(Product.find(product_id))
   end
@@ -49,10 +47,6 @@ class Cart < ActiveRecord::Base
   def total
     cart_items.sum{|item| item.subtotal }
   end
-
-  # def total
-  #   @total ||= products.inject(0) { |sum, product| sum + subtotal(product) }
-  # end
 
   def subtotal(product)
     ci = CartItem.where(:cart_id => id).find_by_product_id(product.id)
