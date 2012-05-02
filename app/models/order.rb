@@ -58,6 +58,11 @@ class Order < ActiveRecord::Base
                             :quantity => cart_item.quantity)
   end
 
+  def subtotal(product)
+    oi = OrderItem.where(:order_id => id).find_by_product_id(product.id)
+    (oi.quantity * oi.product.price).round(2)
+  end
+
   def total
     @total ||= order_items.inject(0) do |sum, order_item|
       sum += order_item.subtotal

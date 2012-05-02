@@ -61,21 +61,4 @@ class Cart < ActiveRecord::Base
   def items
     cart_items
   end
-
-  def update_with_billing_information(billing_data)
-    update_attributes(billing_data[:order])
-
-    Address.create_multiple([
-      billing_data[:billing_address],
-      billing_data[:shipping_address]
-    ])
-
-    CreditCard.create(billing_data[:credit_card])
-  end
-
-  # def update_slug
-  #   unless slug
-  #     update_attributes :slug => Digest::MD5.hexdigest([id, SLUG_SALT].join)
-  #   end
-  # end
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Product do
-  let!(:admin_user) { Fabricate(:user) }
+  let!(:admin) { Fabricate(:user) }
   let!(:store) { Fabricate(:store) }
   let!(:products) do
     [
@@ -15,7 +15,7 @@ describe Product do
 
   context "index" do
     before(:each) do
-      store.add_admin(admin_user)
+      store.add_admin(admin)
       visit products_path(store)
     end
 
@@ -58,14 +58,14 @@ describe Product do
       visit product_path(store, product)
       page.should have_xpath("//img[@src=\"#{DEFAULT_PHOTO}\"]")
     end
-
   end
 
   context "admin" do
     let!(:category) { Fabricate(:category, :store => store) }
     context "show" do
       before(:each) do
-        login_as(admin_user)
+        store.add_admin(admin)
+        login_as(admin)
         visit admin_product_path(store, product)
       end
 

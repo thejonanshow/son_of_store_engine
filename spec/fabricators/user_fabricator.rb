@@ -25,25 +25,3 @@ Fabricator(:user) do
   username { Faker::Name.name }
   password 'derpina'
 end
-
-Fabricator(:admin_user, :from => :user) do
-  name { Faker::Name.name }
-  email { Faker::Internet.email }
-  username { Faker::Name.name }
-  password 'derpina'
-  after_build do |admin_user|
-    role = Fabricate(:role, :name => 'admin')
-    admin_user.roles << role
-  end
-end
-
-Fabricator(:super_admin_user, :from => :user) do
-  # name { Faker::Name.name }
-  # email { Faker::Internet.email }
-  # username { Faker::Name.name }
-  # password 'derpina'
-  after_build do |super_admin_user|
-    role = Fabricate(:role, :name => 'super_admin')
-    super_admin_user.roles << role
-  end
-end

@@ -16,8 +16,4 @@ class CartItem < ActiveRecord::Base
   end
 
   def_delegators :product, :title, :price, :description, :photo
-
-  def attributes_for_order_item
-    { :product_id => product_id, :quantity => quantity }
-  end
 end

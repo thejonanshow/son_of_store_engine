@@ -310,7 +310,7 @@ describe Cart do
     before(:each) do
       visit product_path(store, product)
       click_link "Add to Cart"
-      click_link ""
+      click_link "Remove Item"
     end
 
     it "removes the product from my cart" do
@@ -322,14 +322,14 @@ describe Cart do
     before(:each) do
       visit product_path(store, product)
       click_link "Add to Cart"
-      fill_in "cart_item_quantity", :with => "2"
+      fill_in "quantity", :with => "2"
       @previous_total = find("#total").text.to_f
       @previous_subtotal = find(".subtotal").text.to_f
-      click_button "Update Cart"
+      click_button "Change Quantity"
     end
 
     it "changes the quantity in the cart" do
-      find("#cart_item_quantity").value.should == "2"
+      find("#quantity").value.should == "2"
     end
 
     it "increases the subtotal for that product" do
@@ -340,36 +340,4 @@ describe Cart do
       find("#total").text.to_f.should > @previous_total
     end
   end
-
-  # context "when I increase the quantity of multiple products and click update cart" do
-  #   before(:each) do
-  #     visit product_path(store, product)
-  #     click_link "Add to Cart"
-  #     click_button("Keep Shopping")
-  #     visit product_path(store, second_product)
-  #     click_link "Add to Cart"
-  #     fill_in "cart_order_item_quantity", :with => "2"
-
-  #     page.should have_content("label[for$='category_name']")
-  #           page.should have_selector("input[id$='category_name']")
-
-
-  #     @previous_subtotal_1 = find(".subtotal").text.to_f
-  #     fill_in "cart_order_item_quantity", :with => "3"
-  #     @previous_subtotal = find(".subtotal").text.to_f
-  #     click_button "Update Cart"
-  #   end
-
-  #   it "changes the quantity in the cart" do
-  #     find("#cart_order_item_quantity").value.should == "2"
-  #   end
-
-  #   it "increases the subtotal for that product" do
-  #     find(".subtotal").text.to_f.should > @previous_subtotal
-  #   end
-
-  #   it "increases the total of the cart" do
-  #     find("#total").text.to_f.should > @previous_total
-  #   end
-  # end
 end

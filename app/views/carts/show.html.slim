@@ -16,7 +16,7 @@ div.cart id="cart"
           td.quantity
             = form_for(cart_item, url: cart_item_path(@store, cart_item)) do |f|
               = f.hidden_field :id
-              = f.number_field :quantity, :min => 1, :id => "quantity"
+              = f.text_field :quantity, :min => 1, :id => "quantity"
               = f.submit "Change Quantity", :class => 'btn'
           td.subtotal = cart_item.subtotal
           td = link_to "Remove Item", cart_item_path(:id => cart_item.id), :method => :delete, 
