@@ -11,6 +11,7 @@ require 'forwardable'
 #  updated_at  :datetime        not null
 #
 
+
 # A product category forwards most methods to it's product
 class ProductCategory < ActiveRecord::Base
   attr_accessible :category_id, :product_id

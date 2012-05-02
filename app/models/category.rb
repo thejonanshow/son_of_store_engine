@@ -10,6 +10,7 @@
 #  updated_at          :datetime        not null
 #
 
+
 # A collection of similar products
 class Category < ActiveRecord::Base
   attr_accessible :name, :product_category_id

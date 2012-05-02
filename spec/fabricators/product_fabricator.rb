@@ -13,6 +13,7 @@
 #  updated_at  :datetime        not null
 #
 
+
 Fabricator(:product) do
   title { Faker::Lorem.words(3).map(&:capitalize).join(" ")+sequence.to_s}
   description { Faker::Lorem.paragraph }

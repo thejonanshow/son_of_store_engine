@@ -12,6 +12,7 @@ require 'forwardable'
 #  updated_at :datetime        not null
 #
 
+
 # Attaches products to orders, forwards to products
 class OrderItem < ActiveRecord::Base
   attr_accessible :order_id, :product_id, :quantity

@@ -13,6 +13,7 @@
 #  updated_at  :datetime        not null
 #
 
+
 # A product can be added to a cart or an order through order_items
 class Product < ActiveRecord::Base
   self.per_page = 10

@@ -9,6 +9,7 @@
 #  updated_at :datetime        not null
 #
 
+
 # Relational object that ties a user to a store and gives them admin access
 class StoreUser < ActiveRecord::Base
   attr_accessible :store_id, :user_id

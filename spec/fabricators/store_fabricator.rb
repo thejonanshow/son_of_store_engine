@@ -12,6 +12,7 @@
 #  updated_at  :datetime        not null
 #
 
+
 Fabricator(:store) do
   name Faker::Lorem.words(3).join(" ")
   description Faker::Lorem.words(10).join(" ")

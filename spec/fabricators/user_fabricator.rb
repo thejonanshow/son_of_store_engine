@@ -19,6 +19,7 @@
 #  updated_at             :datetime        not null
 #
 
+
 Fabricator(:user) do
   name { Faker::Name.name }
   email { Faker::Internet.email }

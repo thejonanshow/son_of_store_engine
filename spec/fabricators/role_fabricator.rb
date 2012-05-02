@@ -8,6 +8,7 @@
 #  updated_at :datetime        not null
 #
 
+
 Fabricator(:role) do
   name { Faker::Lorem.words(2).join(' ').underscore }
 end

@@ -19,6 +19,7 @@
 #  updated_at             :datetime        not null
 #
 
+
 # A user is an authenticated visitor
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:

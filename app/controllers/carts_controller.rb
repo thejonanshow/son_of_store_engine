@@ -34,7 +34,7 @@ class CartsController < ApplicationController
     redirect_to edit_order_path(@store, order)
   end
 
-  private 
+  private
 
     def find_cart_from_session
       @cart = Cart.find(session[:cart_id])

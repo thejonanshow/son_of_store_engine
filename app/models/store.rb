@@ -14,6 +14,7 @@
 
 
 
+
 # Represents a store that is owned by a particular user
 class Store < ActiveRecord::Base
   attr_accessible :name, :user_id, :slug, :description, :status, :css

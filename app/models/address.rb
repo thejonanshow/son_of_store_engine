@@ -12,6 +12,7 @@
 #  updated_at :datetime        not null
 #
 
+
 # Users can have billing or shipping addresses
 class Address < ActiveRecord::Base
   attr_accessible :city, :state, :street, :zipcode, :user_id

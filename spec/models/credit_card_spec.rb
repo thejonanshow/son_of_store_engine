@@ -11,6 +11,7 @@
 #  updated_at         :datetime        not null
 #
 
+
 require 'spec_helper'
 
 describe CreditCard do

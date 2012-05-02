@@ -14,6 +14,7 @@
 #
 
 
+
 # An order is created when a user checks out with products
 class Order < ActiveRecord::Base
   attr_accessible :user_id,

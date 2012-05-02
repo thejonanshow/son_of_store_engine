@@ -12,6 +12,7 @@
 #  updated_at :datetime        not null
 #
 
+
 Fabricator(:address) do
   street "1355 Jonan Street"
   city "Jonanville"

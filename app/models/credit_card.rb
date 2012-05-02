@@ -11,6 +11,7 @@
 #  updated_at         :datetime        not null
 #
 
+
 # Note that credit_card_number is distinct from credit_card.number
 class CreditCard < ActiveRecord::Base
   attr_accessible :credit_card_number, :cvc, :expiration_date, :user_id

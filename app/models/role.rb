@@ -10,6 +10,7 @@
 
 
 
+
 # CanCan uses roles to manage authorization
 class Role < ActiveRecord::Base
   attr_accessible :name

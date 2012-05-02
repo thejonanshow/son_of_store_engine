@@ -257,6 +257,31 @@ describe Cart do
     it "shows the correct total in the cart" do
       find('#total').should have_content(product.price)
     end
+
+    context "multiple times" do
+      before(:each) do
+        visit product_path(store, product)
+        click_link "Add to Cart"
+        @previous_total = find("#total").text.to_f
+        @previous_subtotal = find(".subtotal").text.to_f
+        visit product_path(store, product)
+        click_link "Add to Cart"
+        visit product_path(store, product)
+        click_link "Add to Cart"
+      end
+
+      it "changes the quantity in the cart" do
+        find("#quantity").value.should == "4"
+      end
+
+      it "increases the subtotal for that product" do
+        find(".subtotal").text.to_f.should > @previous_subtotal
+      end
+
+      it "increases the total of the cart" do
+        find("#total").text.to_f.should > @previous_total
+      end
+    end
   end
 
   context "is linked from" do

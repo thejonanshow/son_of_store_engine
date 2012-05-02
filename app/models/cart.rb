@@ -8,10 +8,11 @@
 #  store_id   :integer
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
-#  email      :string(255)
 #
 
-# A cart is a place where a user places products, from which an order is created on checkout.
+
+
+# A cart is the place where a user places products before they place an order
 class Cart < ActiveRecord::Base
 
   attr_accessible :user_id,
