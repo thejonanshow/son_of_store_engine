@@ -6,7 +6,7 @@ class CartsController < ApplicationController
   end
 
   def prompt
-    redirect_to checkout_path if current_user
+    redirect_to new_order_path(@store, :cart => @cart) if current_user
   end
 
   def update

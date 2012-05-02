@@ -28,5 +28,5 @@ div.cart id="cart"
         td#total = @cart.total
       
 .cart-actions
-= link_to "Checkout", new_order_path(@store, :cart => @cart), :class=>'btn btn-primary'
+= link_to "Checkout", checkout_prompt_path(@store, :cart => @cart), :class=>'btn btn-primary'
 = link_to "Keep Shopping", products_path(@store), :class => 'btn btn-primary'
