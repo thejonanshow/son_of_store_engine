@@ -103,30 +103,30 @@ class Store < ActiveRecord::Base
   def add_admin_from_form(email)
     if user = User.find_by_email(email)
       add_admin(user)
-      StoreAdminMailer.new_admin_email(user, self).deliver
+      Thread.new { StoreAdminMailer.new_admin_email(user, self).deliver }
     end
   end
 
   def add_stocker_from_form(email)
     if user = User.find_by_email(email)
       add_stocker(user)
-      StoreStockerMailer.new_stocker_email(user, self).deliver
+      Thread.new { StoreStockerMailer.new_stocker_email(user, self).deliver }
     end
   end
 
   def invite_new_admin(email)
-    StoreAdminMailer.invite_admin_email(email, self).deliver
+    Thread.new { StoreAdminMailer.invite_admin_email(email, self).deliver }
   end
 
   def invite_new_stocker(email)
-    StoreStockerMailer.invite_stocker_email(email, self).deliver
+    Thread.new { StoreStockerMailer.invite_stocker_email(email, self).deliver }
   end
 
   def delete_admin_user(user_id)
     user = User.find(user_id)
     if admin_users.length > 1
       StoreUser.find_by_user_id(user.id).destroy
-      StoreAdminMailer.delete_admin_email(user, self).deliver
+      Thread.new { StoreAdminMailer.delete_admin_email(user, self).deliver }
       true
     else
       false
