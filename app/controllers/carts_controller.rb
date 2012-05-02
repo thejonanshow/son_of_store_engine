@@ -22,12 +22,6 @@ class CartsController < ApplicationController
     redirect_to cart_path(@store)
   end
 
-  def destroy
-    cart.destroy
-    session[:cart_id] = nil
-    redirect_to cart_path
-  end
-
   def checkout
     order = Order.create_from_cart(@cart, @store)
     order.update_attributes(:user_id => current_user.id) if current_user
