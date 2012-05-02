@@ -46,7 +46,7 @@ StoreEngine::Application.routes.draw do
     resources :categories
     resources :orders
     resource :cart, :only => [:show, :update]
-    resources :cart_items, only: [:create, :update, :destroy]
+    resource :cart_item, :only => [:destroy]
   end 
 
   root :to => "stores#index"
