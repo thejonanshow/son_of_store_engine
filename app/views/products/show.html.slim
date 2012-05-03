@@ -1,6 +1,6 @@
 h1 = @product.title
 #prod_show_img
-  img src="2#{@product.photo}" height="300px" width="300px"
+  img src="#{@product.photo}" height="300px" width="300px"
 #prod_show_info
     h3 = "Price: #{number_to_currency(@product.price)}"
     h3 Description
@@ -11,6 +11,6 @@ h1 = @product.title
       p = link_to("Add to Cart",
                   cart_path(:product_id => @product), :method => :put, :class => 'btn')
 
-    h3 Categories Associated with Product
-    - @product.categories.each do |category|
+    h3 Categories
+    - @store.categories.each do |category|
       p = link_to category.name, category_path(@store, category)
